@@ -359,14 +359,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             unique_numbers = sorted(list(set(numbers)))
             unique_string = '^'.join(map(str, unique_numbers))
             result.append(unique_string)
-        result = sorted(list(set(result)))
+        # result = sorted(list(set(result)))
 
         DnF = str()
+        new_string = 1
         for i in range(len(result)):
             if i < len(result) - 1:
-                DnF += "(" + result[i] + ")v"
+                string = "(" + result[i] + ")v"
             else:
-                DnF += "(" + result[i] + ")"
+                string = "(" + result[i] + ")"
+            if len(DnF + string) >= 50 * new_string:
+                DnF += '\n'
+                new_string += 1
+            DnF += string
         print(res_string[0])
         return DnF, result, kol_elem
 
