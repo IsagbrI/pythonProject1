@@ -7,38 +7,39 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(536, 856)
+        MainWindow.resize(540, 850)
+        MainWindow.setMaximumSize(QtCore.QSize(540, 850))
         MainWindow.setStyleSheet("background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0.353234, y2:0.557, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(27, 0, 148, 255));")
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(parent=self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(10, 380, 521, 431))
-        self.label.setWordWrap(True)
-        self.label.setStyleSheet("font: 15pt \"Times New Roman\";\n"
+        self.label.setGeometry(QtCore.QRect(0, 380, 540, 421))
+        self.label.setMaximumSize(QtCore.QSize(540, 425))
+        self.label.setStyleSheet("font: 16pt \"Times New Roman\";\n"
 "color: rgb(255, 255, 255);")
         self.label.setText("")
+        self.label.setWordWrap(True)
         self.label.setObjectName("label")
         self.pushButton = QtWidgets.QPushButton(parent=self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(200, 380, 151, 51))
         self.pushButton.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 15pt \"Times New Roman\";\n"
+"font: 16pt \"Times New Roman\";\n"
 "")
         self.pushButton.setObjectName("pushButton")
         self.textEdit = QtWidgets.QTextEdit(parent=self.centralwidget)
-        self.textEdit.setGeometry(QtCore.QRect(0, 40, 536, 341))
-        self.textEdit.setStyleSheet("font: 15pt \"Times New Roman\";\n"
+        self.textEdit.setGeometry(QtCore.QRect(0, 40, 541, 341))
+        self.textEdit.setStyleSheet("font: 16pt \"Times New Roman\";\n"
 "color: rgb(255, 255, 255);\n"
 "")
         self.textEdit.setObjectName("textEdit")
         self.label_2 = QtWidgets.QLabel(parent=self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(0, 0, 536, 41))
-        self.label_2.setWordWrap(True)
-        self.label_2.setStyleSheet("font: 15pt \"Times New Roman\";\n"
+        self.label_2.setGeometry(QtCore.QRect(0, 0, 541, 41))
+        self.label_2.setStyleSheet("font: 16pt \"Times New Roman\";\n"
 "color: rgb(255, 255, 255);")
         self.label_2.setObjectName("label_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 536, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 540, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
@@ -59,7 +60,7 @@ class Ui_MainWindow(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Times New Roman\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.label_2.setText(_translate("MainWindow", "                                     Матрица смежности"))
+        self.label_2.setText(_translate("MainWindow", "                       Матрица смежности"))
 
 
 def Taking_Out(string, kol_elem):
@@ -239,13 +240,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     if string.count("()") != 0:
                         string = string.replace("()", "", 1)
                         l = len(string)
-
             i += 1
+        string = string.replace(")(", ")^(")
+
+        number_of_string = 1
+        new_string = ""
+        for i in range(len(string)):
+            symbol = string[i]
+            new_string += symbol
+            if symbol == '^' and i > number_of_string * 50:
+                new_string += '\n'
+                number_of_string += 1
+        string = new_string
+
         dop = str()
         res_string = str()
         t_count = 0
         dl = str()
-        string = string.replace(")(", ")^(")
         print("Дизъюнкции (дороги из _ в _) :", string)
         result1 = string
         string = string.replace(")^(", ")(")
@@ -414,9 +425,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         RES = str()
         for i in range(len(res_string)):
             if i < len(res_string) - 1:
-                RES += "{" + res_string[i] + "}, "
+                RES += "{" + res_string[i] + "},"
             else:
                 RES += "{" + res_string[i] + "}"
+
+        number_of_string = 1
+        new_string = ""
+        for i in range(len(RES)):
+            symbol = RES[i]
+            new_string += symbol
+            if symbol == ',' and i > number_of_string * 50:
+                new_string += '\n'
+                number_of_string += 1
+        RES = new_string.replace(',', ', ')
+
         return RES
 
 
