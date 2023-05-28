@@ -359,6 +359,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             unique_numbers = sorted(list(set(numbers)))
             unique_string = '^'.join(map(str, unique_numbers))
             result.append(unique_string)
+        result = sorted(list(set(result)))
 
         DnF = str()
         for i in range(len(result)):
