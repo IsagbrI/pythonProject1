@@ -346,6 +346,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print(res_string)
         res_dop = []
         count = 0
+        print("111", res_string)
         while count != 2:
             if len(res_string) > 1:
                 dop_1 = res_string[0]
@@ -364,6 +365,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             elif len(res_string) == 1:
                 break
 
+        print("222", res_string)
         result = []
         for string in res_string[0]:
             numbers = list(map(int, string.split('^')))
@@ -372,6 +374,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             result.append(unique_string)
         # result = sorted(list(set(result)))
 
+        print("333", result)
+
+        result = list(set(result))
+
+        print("444", result)
         DnF = str()
         new_string = 1
         for i in range(len(result)):
@@ -384,6 +391,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 new_string += 1
             DnF += string
         print(res_string[0])
+
         return DnF, result, kol_elem
 
 
