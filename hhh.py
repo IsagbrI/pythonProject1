@@ -103,8 +103,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     @staticmethod
     def draw_graph(graph):
-        G = nx.Graph(graph)
-        pos = nx.spring_layout(G)
+        G = nx.DiGraph(graph)
+        pos = nx.circular_layout(G)
         nx.draw_networkx_nodes(G, pos, node_color='lightblue', node_size=500)
         nx.draw_networkx_edges(G, pos, edge_color='gray')
         nx.draw_networkx_labels(G, pos, font_color='black')
